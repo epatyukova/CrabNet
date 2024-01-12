@@ -99,14 +99,16 @@ def save_results(data_dir, mat_prop, classification, file_name, verbose=True):
     if model.classification:
         auc = roc_auc_score(output[0], output[1])
         print(f'{mat_prop} ROC AUC: {auc:0.3f}')
+        metric=auc
     else:
         mae = np.abs(output[0] - output[1]).mean()
         print(f'{mat_prop} mae: {mae:0.3g}')
+        metric=mae
 
     # save predictions to a csv
     fname = f'{mat_prop}_{file_name.replace(".csv", "")}_output.csv'
     to_csv(output, fname)
-    return model, mae
+    return model, metric
 
 
 # %%
